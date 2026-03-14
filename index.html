@@ -52,6 +52,10 @@ fetch("memes.json")
 .then(r => r.json())
 .then(files => {
 
+  let cdnStr = 'memes/1/';
+  // use production images comment out for localhost
+  cdnStr = 'https://files.buddypond.com/Marak/Marak/pads/meme/public/memes/1/';
+
   const feed = document.getElementById("feed");
 
   files.forEach(file => {
@@ -64,7 +68,7 @@ fetch("memes.json")
     if (file.endsWith(".mp4") || file.endsWith(".webm") || file.endsWith(".mov")) {
 
       el = document.createElement("video");
-      el.src = "memes/1/" + file;
+      el.src = cdnStr + file;
 
       el.autoplay = true;
       el.loop = true;
@@ -76,7 +80,7 @@ fetch("memes.json")
     } else {
 
       el = document.createElement("img");
-      el.src = "memes/1/" + file;
+      el.src = cdnStr + file;
       el.loading = "lazy";
 
     }

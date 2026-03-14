@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Meme Feed</title>
+
+<style>
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #111;
+  color: white;
+}
+
+.feed {
+  max-width: 700px;
+  margin: auto;
+  padding: 10px;
+}
+
+.meme {
+  margin-bottom: 20px;
+}
+
+.meme img,
+.meme video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  background: black;
+}
+
+video {
+  object-fit: contain;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="feed" id="feed"></div>
+
+<script>
+
+fetch("memes.json")
+.then(r => r.json())
+.then(files => {
+
+  const feed = document.getElementById("feed");
+
+  files.forEach(file => {
+
+    const container = document.createElement("div");
+    container.className = "meme";
+
+    let el;
+
+    if (file.endsWith(".mp4") || file.endsWith(".webm") || file.endsWith(".mov")) {
+
+      el = document.createElement("video");
+      el.src = "memes/1/" + file;
+
+      el.autoplay = true;
+      el.loop = true;
+      el.muted = true;
+      el.playsInline = true;
+      el.controls = true;
+      el.preload = "metadata";
+
+    } else {
+
+      el = document.createElement("img");
+      el.src = "memes/1/" + file;
+      el.loading = "lazy";
+
+    }
+
+    container.appendChild(el);
+    feed.appendChild(container);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
